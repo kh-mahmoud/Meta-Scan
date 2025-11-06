@@ -1,3 +1,5 @@
+'use client'
+
 
 import Link from 'next/link'
 import Logo from './Logo'
@@ -5,7 +7,7 @@ import { links } from '@/constants'
 
 
 
-export default function Footer() {
+export default  function Footer() {
     return (
         <footer className="py-5 ">
             <div className="mx-auto max-w-5xl px-6">

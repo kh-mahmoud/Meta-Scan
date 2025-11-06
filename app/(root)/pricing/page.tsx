@@ -3,8 +3,8 @@ import React from 'react';
 
 const page = () => {
   return (
-    <div>
-       <PricingTable newSubscriptionRedirectUrl='/dashboard'/>
+    <div className='flex h-[calc(100vh-64px)] justify-center items-center mx-10'>
+       <PricingTable  newSubscriptionRedirectUrl='/dashboard'/>
     </div>
   );
 }

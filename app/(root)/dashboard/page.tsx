@@ -1,11 +1,16 @@
-import React from 'react';
+import GenerateCard from "@/components/GenerateCard";
 
-const page = () => {
+
+
+const Dashboard =  () => {
+  
   return (
     <div>
-        this is dashboard
+      <section>
+        <GenerateCard />
+      </section>
     </div>
   );
-}
+};
 
-export default page;
+export default Dashboard;
