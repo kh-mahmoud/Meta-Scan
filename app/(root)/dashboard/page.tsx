@@ -1,4 +1,4 @@
-import GenerateCard from "@/components/GenerateCard";
+import ReportForm from "@/components/ReportForm";
 
 
 
@@ -7,7 +7,7 @@ const Dashboard =  () => {
   return (
     <div>
       <section>
-        <GenerateCard />
+        <ReportForm />
       </section>
     </div>
   );
