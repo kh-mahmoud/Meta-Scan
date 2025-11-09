@@ -10,12 +10,8 @@ import {
 import { ChevronDown } from "lucide-react";
 import { countries } from "@/constants";
 import ReactCountryFlag from "react-country-flag";
+import { CountrySelectorProps } from "@/types";
 
-interface CountrySelectorProps {
-  value: string;
-  onValueChange: (value: string) => void;
-  disabled?: boolean;
-}
 
 export function CountrySelector({
   value,
