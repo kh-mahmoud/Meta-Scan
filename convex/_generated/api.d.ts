@@ -8,7 +8,9 @@
  * @module
  */
 
+import type * as analysis from "../analysis.js";
 import type * as http from "../http.js";
+import type * as scraping from "../scraping.js";
 import type * as users from "../users.js";
 
 import type {
@@ -26,7 +28,9 @@ import type {
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  analysis: typeof analysis;
   http: typeof http;
+  scraping: typeof scraping;
   users: typeof users;
 }>;
 declare const fullApiWithMounts: typeof fullApi;

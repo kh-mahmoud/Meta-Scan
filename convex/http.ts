@@ -5,6 +5,7 @@ import { httpAction } from "./_generated/server";
 import { internal } from "./_generated/api";
 
 const webhookSecret = process.env.CLERK_WEBHOOK_SECRET;
+const http = httpRouter();
 
 async function validateRequest(
   req: Request
@@ -73,13 +74,22 @@ const handleClerkWebhook = httpAction(async (ctx, request) => {
   });
 });
 
-const http = httpRouter();
+
+// const handleScrapingWebhook = httpAction(async (ctx, request) => {
+//       return null
+// })
 
 http.route({
   path: "/clerk",
   method: "POST",
   handler: handleClerkWebhook,
 });
+
+// http.route({
+//   path: "/api/scrapper",
+//   method: "POST",
+//   handler: handleScrapingWebhook,
+// });
 
 
 
