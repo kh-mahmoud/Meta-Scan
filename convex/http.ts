@@ -2,7 +2,8 @@ import { httpRouter } from "convex/server";
 import type { WebhookEvent } from "@clerk/backend";
 import { Webhook } from "svix";
 import { httpAction } from "./_generated/server";
-import { internal } from "./_generated/api";
+import { api, internal } from "./_generated/api";
+import { Id } from "./_generated/dataModel";
 
 const webhookSecret = process.env.CLERK_WEBHOOK_SECRET;
 const http = httpRouter();
@@ -74,10 +75,52 @@ const handleClerkWebhook = httpAction(async (ctx, request) => {
   });
 });
 
+const handleScrapingWebhook = httpAction(async (ctx, request) => {
+  const data = await request.json();
 
-// const handleScrapingWebhook = httpAction(async (ctx, request) => {
-//       return null
-// })
+  //ectract the tracking id of the report from the url
+  const url = new URL(request.url);
+  const reportId = url.searchParams.get("reportId") as Id<"reports">;
+  let id;
+  if (!reportId) {
+    throw new Error("Missing reportId");
+  }
+
+  try {
+    //step 1 save the raw data (scraped data)
+    const report = await ctx.runQuery(api.scraping.GetReportById, {
+      reportId,
+    });
+
+    if (!report) {
+      throw new Error("Report not found");
+    }
+
+    await ctx.runMutation(internal.scraping.saveRawScrapingData, {
+      reportId,
+      rawData: data,
+    });
+
+    //step 2 run the analysis of the scraped data
+    id = await ctx.scheduler.runAfter(0, api.analysis.runAnalysis, {
+      reportId,
+    });
+
+    return new Response("Success", { status: 200 });
+  } catch (error) {
+    console.log(error);
+    if (id) {
+      await ctx.runMutation(api.scraping.failJob, {
+        reportId,
+        error:
+          error instanceof Error
+            ? error.message
+            : "Unknown error occurred during analysis",
+      });
+    }
+    return new Response("Failed", { status: 500 });
+  }
+});
 
 http.route({
   path: "/clerk",
@@ -85,14 +128,10 @@ http.route({
   handler: handleClerkWebhook,
 });
 
-// http.route({
-//   path: "/api/scrapper",
-//   method: "POST",
-//   handler: handleScrapingWebhook,
-// });
-
-
-
-
+http.route({
+  path: "/api/scrapper",
+  method: "POST",
+  handler: handleScrapingWebhook,
+});
 
 export default http;

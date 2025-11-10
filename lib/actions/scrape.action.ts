@@ -7,6 +7,7 @@ import { ConvexHttpClient } from "convex/browser";
 import { redirect } from "next/navigation";
 import { retryAnalysis } from "./analysis.actions";
 import { buildScrapingPrompt } from "../utils";
+import { Id } from "@/convex/_generated/dataModel";
 
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
@@ -14,8 +15,9 @@ const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 export const Scrape = async ({ prompt, country, reportId }: scrapeProps) => {
   const { userId } = await auth();
   if (!userId) redirect("/");
+
   //id to track the scraping
-   let scrapeId= reportId;
+  let scrapeId = reportId;
 
   //if the scraping result already exists we retry the analysis
   if (reportId) {
@@ -36,13 +38,14 @@ export const Scrape = async ({ prompt, country, reportId }: scrapeProps) => {
           smartRetry: true,
         };
       } else {
+        //error in retry
         return {
           ok: false,
           error: "retry failed",
         };
       }
     } else {
-      //prepare for new scraping
+      //prepare to scrape report again
       await convex.mutation(api.scraping.retryScrapingState, {
         reportId: reportId,
       });
@@ -60,36 +63,64 @@ export const Scrape = async ({ prompt, country, reportId }: scrapeProps) => {
   const EndPoint = `${process.env.CONVEX_URL_WEBHOOK}?reportId=${scrapeId}`;
   const encodedEndpoint = encodeURI(EndPoint);
 
-  const url = `https://api.brightdata.com/datasets/v3/trigger?dataset_id=gd_m7dhdot1vw9a7gc1n&endpoint=${encodedEndpoint}&format=json&uncompressed_webhook=true&include_errors=true`;
+  const url = `https://api.brightdata.com/datasets/v3/trigger?dataset_id=${process.env.DATASET_ID}&endpoint=${encodedEndpoint}&format=json&uncompressed_webhook=true&include_errors=true`;
   const ScrapingPrompt = buildScrapingPrompt(prompt);
 
-  const result = await fetch(url, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${process.env.BRIGHTDATA_API_kEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      input: [
-        {
-          url: "https://www.perplexity.ai",
-          prompt: ScrapingPrompt,
-          country,
-          index: 1,
-        },
-      ],
-      custom_output_fields: [
-        "url",
-        "prompt",
-        "answer_text",
-        "sources",
-        "citations",
-        "timestamp",
-        "input",
-      ],
-    }),
-  });
+  try {
+    const result = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.BRIGHTDATA_API_kEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        input: [
+          {
+            url: "https://www.perplexity.ai",
+            prompt: ScrapingPrompt,
+            country,
+            index: 1,
+          },
+        ],
+        custom_output_fields: [
+          "url",
+          "prompt",
+          "answer_text",
+          "sources",
+          "citations",
+          "timestamp",
+          "input",
+        ],
+      }),
+    });
 
-  if (result.ok) {
+    if (!result.ok && scrapeId) {
+      await convex.mutation(api.scraping.failJob, {
+        reportId: scrapeId,
+        error: "scraping failed",
+      });
+
+      return {
+        ok: false,
+        error: `failed to scrape data`,
+      };
+    }
+
+    const data = await result.json().catch(() => null);
+
+    if (data && data.snapshot_id) {
+      await convex.mutation(api.scraping.updateJobWithSnapshotId, {
+        reportId: scrapeId as Id<"reports">,
+        snapshotId: data.snapshot_id,
+      });
+    }
+
+    return { ok: true, data, scrapeId };
+  } catch (error) {
+    console.log(error);
+    await convex.mutation(api.scraping.failJob, {
+      reportId: scrapeId as Id<"reports">,
+      error: "scraping failed",
+    });
   }
 };

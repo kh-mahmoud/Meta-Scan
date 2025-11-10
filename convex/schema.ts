@@ -10,7 +10,6 @@ export default defineSchema({
     analysisPrompt: v.optional(v.string()),
     //trackingId
     snapshotId: v.optional(v.string()),
-
     status: v.union(
       v.literal("pending"),
       v.literal("running"),
