@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { action, internalAction } from "./_generated/server";
+import { action } from "./_generated/server";
 import { api, internal } from "./_generated/api";
 import { buildAnalysisPrompt } from "@/lib/utils";
 
@@ -39,6 +39,7 @@ export const runAnalysis = action({
       const scrapingData = Array.isArray(report.results)
         ? report.results
         : [report.results];
+
       const analysisPrompt = buildAnalysisPrompt(scrapingData);
 
       console.log("Generating SEO report for job:", args.reportId);
@@ -84,23 +85,16 @@ export const runAnalysis = action({
 
       return null;
     } catch (error) {
-      //   console.error("Analysis error for job:", args.jobId, error);
-
+      console.log(error);
       // Set job status to failed when analysis fails
-      //   try {
-      //     await ctx.runMutation(api.scrapingJobs.failJob, {
-      //       jobId: args.jobId,
-      //       error:
-      //         error instanceof Error
-      //           ? error.message
-      //           : "Unknown error occurred during analysis",
-      //     });
-      //     console.log(`Job ${args.jobId} marked as failed due to analysis error`);
-      //   } catch (failError) {
-      //     console.error("Failed to update job status to failed:", failError);
-      //   }
-
-
+      try {
+        await ctx.runMutation(api.scraping.failJob, {
+          reportId: args.reportId,
+          error: "Unknown error occurred during analysis",
+        });
+      } catch (failError) {
+        console.error("Failed to update job status to failed:", failError);
+      }
 
       return null;
     }

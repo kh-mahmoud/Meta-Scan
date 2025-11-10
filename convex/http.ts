@@ -76,15 +76,15 @@ const handleClerkWebhook = httpAction(async (ctx, request) => {
 });
 
 const handleScrapingWebhook = httpAction(async (ctx, request) => {
-  const data = await request.json();
-
-  //ectract the tracking id of the report from the url
+    //ectract the tracking id of the report from the url
   const url = new URL(request.url);
   const reportId = url.searchParams.get("reportId") as Id<"reports">;
+
+  if (!reportId) throw new Error("Missing reportId");
+  
+  const data = await request.json();
+
   let id;
-  if (!reportId) {
-    throw new Error("Missing reportId");
-  }
 
   try {
     //step 1 save the raw data (scraped data)
@@ -102,11 +102,11 @@ const handleScrapingWebhook = httpAction(async (ctx, request) => {
     });
 
     //step 2 run the analysis of the scraped data
-    id = await ctx.scheduler.runAfter(0, api.analysis.runAnalysis, {
-      reportId,
-    });
+    // id = await ctx.scheduler.runAfter(0, api.analysis.runAnalysis, {
+    //   reportId,
+    // });
 
-    return new Response("Success", { status: 200 });
+    return new Response("Success", {status: 200});
   } catch (error) {
     console.log(error);
     if (id) {
@@ -129,7 +129,7 @@ http.route({
 });
 
 http.route({
-  path: "/api/scrapper",
+  path: "/api/scraper",
   method: "POST",
   handler: handleScrapingWebhook,
 });

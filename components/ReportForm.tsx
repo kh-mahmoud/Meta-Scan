@@ -9,17 +9,36 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Plus, FileText, Sparkles } from "lucide-react";
+import { Plus, FileText, Sparkles, User } from "lucide-react";
 import { useState } from "react";
 import { CountrySelector } from "@/components/country-selector";
+import { toast } from "sonner";
+import { Scrape } from "@/lib/actions/scrape.action";
+import { Country } from "@/types";
+import { useRouter } from "next/navigation";
 
 const ReportForm = () => {
   const [prompt, setPrompt] = useState("");
-  const [country, setCountry] = useState("US");
+  const [country, setCountry] = useState<Country>("US");
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
-  const handleSubmit = async () => {
-
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      const result = await Scrape({ prompt, country });
+      if (result?.ok) {
+        const snapshotId = result.data.snapshot_id;
+        router.push(`/dashboard/report/${snapshotId}`)
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong please try later !");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -50,7 +69,7 @@ const ReportForm = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="relative">
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={(e) => handleSubmit(e)} className="space-y-6">
                 <div className="flex flex-col md:flex-row gap-4">
                   <div className="flex-1 relative">
                     <div className="report-form-file-icon">

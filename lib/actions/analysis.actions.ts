@@ -7,6 +7,15 @@ import { ConvexHttpClient } from "convex/browser";
 
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
+
+export const runAnalysis = async()=>{
+      try {
+        
+      } catch (error) {
+        
+      }
+}
+
 export const retryAnalysis = async (
   reportId: Id<"reports">
 ): Promise<RetryAnalysisResult> => {

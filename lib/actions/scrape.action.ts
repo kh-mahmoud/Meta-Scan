@@ -106,7 +106,9 @@ export const Scrape = async ({ prompt, country, reportId }: scrapeProps) => {
       };
     }
 
+    //after the data done scraping it return a snapshot_id and send the result to the webhook
     const data = await result.json().catch(() => null);
+
 
     if (data && data.snapshot_id) {
       await convex.mutation(api.scraping.updateJobWithSnapshotId, {
