@@ -87,7 +87,7 @@ export function buildAnalysisPrompt(scrapingData: ScrapingDataItem[]): string {
   const formattedData = scrapingData.map((item, index) => ({
     id: index + 1,
     prompt: item.prompt,
-    answer_text: item.answer_text,
+    answer_text: item.answer_text, 
     sources: item.sources,
     timestamp: item.timestamp,
     url: item.url,
