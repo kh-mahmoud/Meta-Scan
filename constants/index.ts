@@ -87,4 +87,4 @@ export const  countries = [
   { code: "MT", name: "Malta", flag: "🇲🇹" },
   { code: "CY", name: "Cyprus", flag: "🇨🇾" },
   { code: "NZ", name: "New Zealand", flag: "🇳🇿" },
-];
+] as const ;
