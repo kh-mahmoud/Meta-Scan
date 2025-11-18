@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import { ClerkProvider } from "@clerk/nextjs";
 import ConvexClientProvider from "@/providers/ConvexClerkProvider";
+import { Toaster } from "sonner";
 
 const popins = Poppins({
   variable: "--font-poppins",
@@ -27,6 +28,7 @@ export default function RootLayout({
         <body className={`${popins.variable} antialiased`}>
           <Header />
           <ConvexClientProvider>{children}</ConvexClientProvider>
+          <Toaster richColors position="bottom-right" />
         </body>
       </html>
     </ClerkProvider>
