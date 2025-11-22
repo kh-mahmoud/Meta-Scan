@@ -5,8 +5,7 @@ import { httpAction } from "./_generated/server";
 import { api, internal } from "./_generated/api";
 import { Id } from "./_generated/dataModel";
 
-const webhookSecret = process.env.CLERK_WEBHOOK_SECRET;
-const http = httpRouter();
+const webhookSecret = process.env.CLERK_WEBHOOK_SECRET!;
 
 async function validateRequest(
   req: Request
@@ -102,9 +101,9 @@ const handleScrapingWebhook = httpAction(async (ctx, request) => {
     });
 
     //step 2 run the analysis of the scraped data
-    // id = await ctx.scheduler.runAfter(0, api.analysis.runAnalysis, {
-    //   reportId,
-    // });
+    id = await ctx.scheduler.runAfter(0, api.analysis.runAnalysis, {
+      reportId,
+    });
 
     return new Response("Success", {status: 200});
   } catch (error) {
@@ -121,6 +120,12 @@ const handleScrapingWebhook = httpAction(async (ctx, request) => {
     return new Response("Failed", { status: 500 });
   }
 });
+
+
+
+
+const http = httpRouter();
+
 
 http.route({
   path: "/clerk",

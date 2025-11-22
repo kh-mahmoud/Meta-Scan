@@ -1,7 +1,11 @@
 import { v } from "convex/values";
 import { action } from "./_generated/server";
 import { api, internal } from "./_generated/api";
-import { buildAnalysisPrompt } from "@/lib/utils";
+import { generateObject } from 'ai';
+import { seoReportSchema } from "@/lib/schema";
+import { google } from '@ai-sdk/google';
+import { buildAnalysisPrompt, systemPrompt } from "@/lib/prompts";
+
 
 //start the analysis
 export const runAnalysis = action({
@@ -17,10 +21,6 @@ export const runAnalysis = action({
         reportId: args.reportId,
       });
 
-      if (!report) {
-        console.error(`No report found for report ID: ${args.reportId}`);
-        return null;
-      }
 
       if (!report.results || report.results.length === 0) {
         await ctx.runMutation(api.scraping.failJob, {
@@ -52,36 +52,28 @@ export const runAnalysis = action({
 
       console.log("Prompt saved for job:", args.reportId);
 
-      //   const { object: seoReport } = await generateObject({
-      //     model: openai("gpt-4o"),
-      //     system: systemPrompt(),
-      //     prompt: analysisPrompt,
-      //     schema: seoReportSchema,
-      //   });
+        const { object: seoReport } = await generateObject({
+          model: google("gemini-2.5-flash"),
+          system: systemPrompt(),
+          prompt: analysisPrompt,
+          schema: seoReportSchema,
+        });
 
-      //   console.log("SEO report generated successfully:", {
-      //     entity_name: seoReport.meta.entity_name,
-      //     entity_type: seoReport.meta.entity_type,
-      //     confidence_score: seoReport.meta.confidence_score,
-      //     total_sources: seoReport.inventory.total_sources,
-      //     recommendations_count: seoReport.recommendations?.length || 0,
-      //     summary_score: seoReport.summary?.overall_score || 0,
-      //   });
 
       // Step 2: Save the SEO report to the database
-      //   await ctx.runMutation(internal.scrapingJobs.saveSeoReport, {
-      //     jobId: args.jobId,
-      //     seoReport: seoReport,
-      //   });
+        await ctx.runMutation(internal.scraping.saveReport, {
+          reportId: args.reportId,
+          seoReport: seoReport,
+        });
 
-      //   console.log("SEO report saved for job:", args.jobId);
+        console.log("SEO report saved for job:", args.reportId);
 
       // Step 3: Complete the job (mark as completed)
-      //   await ctx.runMutation(internal.scrapingJobs.completeJob, {
-      //     jobId: args.jobId,
-      //   });
+        await ctx.runMutation(internal.scraping.completeJob, {
+          reportId: args.reportId,
+        });
 
-      //   console.log(`Job ${args.jobId} analysis completed successfully`);
+        console.log(`Job ${args.reportId} analysis completed successfully`);
 
       return null;
     } catch (error) {

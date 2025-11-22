@@ -59,7 +59,7 @@ export const retryScrapingState = mutation({
   handler: async (ctx, args) => {
     //check user auth
     const identity = await ctx.auth.getUserIdentity();
-    if (!identity) throw new Error("user not found");
+    if (!identity?.subject) throw new Error("user not found");
 
     await ctx.db.patch(args.reportId, {
       status: "pending",
@@ -196,6 +196,27 @@ export const GetReportById = query({
   },
 });
 
+export const GetReportBySnapshotId = query({
+  args: {
+    snapshotId: v.string(),
+    userId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    try {
+      const report = await ctx.db
+        .query("reports")
+        .withIndex("by_snapshot", (q) => q.eq("snapshotId", args.snapshotId))
+        .first();
+
+      if (!report) throw new Error("No report found");
+
+      return report;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+});
+
 export const deleteReport = mutation({
   args: {
     reportId: v.id("reports"),
@@ -204,5 +225,33 @@ export const deleteReport = mutation({
   handler: async (ctx, args) => {
     await ctx.db.delete(args.reportId);
     return null;
+  },
+});
+
+export const saveReport = internalMutation({
+  args: {
+    reportId: v.id("reports"),
+    seoReport: v.any(),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.patch(args.reportId, {
+      seoReport: args.seoReport,
+    });
+  },
+});
+
+export const getUserReports = query({
+  args:{},
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity?.email) throw new Error("user not found");
+
+    const reports = await ctx.db
+      .query("reports")
+      .withIndex("by_creator", (q) => q.eq("creator", identity.subject))
+      .order("desc")
+      .collect();
+
+      return reports
   },
 });

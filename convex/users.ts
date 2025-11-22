@@ -49,10 +49,13 @@ export const deleteUser = internalMutation({
   },
   handler: async (ctx, args) => {
       const user = await ctx.db.query("users").withIndex("by_clerkId", (q) => q.eq("clerkId", args.clerkId!)).unique();
-
+      const reports = await ctx.db.query("reports").withIndex("by_creator", (q) => q.eq("creator", user!._id)).collect();
       if(!user) throw new Error("User not found")
 
       await ctx.db.delete(user._id);
+      await Promise.all(reports.map(async(report)=>(
+         await ctx.db.delete(report._id)
+      )))
       return user
   },
 });

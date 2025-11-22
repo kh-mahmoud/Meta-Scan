@@ -25,7 +25,9 @@ export default defineSchema({
 
     createdAt: v.number(),
     completedAt: v.optional(v.number()),
-  }),
+  })
+  .index("by_snapshot", ["snapshotId"])
+  .index("by_creator",["creator"]),
   users: defineTable({
     name: v.string(),
     clerkId: v.string(),

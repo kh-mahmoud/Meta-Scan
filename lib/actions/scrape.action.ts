@@ -6,8 +6,8 @@ import { auth } from "@clerk/nextjs/server";
 import { ConvexHttpClient } from "convex/browser";
 import { redirect } from "next/navigation";
 import { retryAnalysis } from "./analysis.actions";
-import { buildScrapingPrompt } from "../utils";
 import { Id } from "@/convex/_generated/dataModel";
+import { buildScrapingPrompt } from "../prompts";
 
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
