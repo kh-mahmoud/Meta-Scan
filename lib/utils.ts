@@ -1,104 +1,138 @@
-import { ScrapingDataItem } from "@/types";
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
+import {
+  Clock,
+  CheckCircle,
+  XCircle,
+  BarChart3,
+  HardDriveDownload,
+} from "lucide-react";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
 
-export function buildScrapingPrompt(target: string): string {
-  return `
-You are an SEO research assistant specializing in comprehensive entity analysis.
+//status style change handlers
 
-TASK: Conduct a thorough web search and analysis of the target entity, providing structured data for SEO research purposes.
+export function getSpinnerColor(status: string): string {
+  const statusConfig = {
+    pending: "text-yellow-600 dark:text-yellow-400",
+    running: "text-blue-600 dark:text-blue-400",
+    analyzing: "text-purple-600 dark:text-purple-400",
+  };
 
-TARGET: ${target}
-
-INSTRUCTIONS:
-
-1. **COMPREHENSIVE SEARCH**: Search for the target across multiple angles:
-   - Primary name variations and aliases
-   - Professional titles and roles
-   - Company/brand associations
-   - Geographic location mentions
-   - Industry-specific keywords
-
-2. **SOURCE CATEGORIZATION**: For each relevant result, categorize and extract:
-   - **Official Sources**: Websites, social profiles, professional pages
-   - **Social Media**: LinkedIn, Twitter/X, Instagram, YouTube, TikTok, Facebook
-   - **Professional**: Company websites, portfolios, GitHub, professional directories
-   - **Educational**: Course platforms, tutorial sites, educational content
-   - **Community**: Forums, Reddit, discussion boards, community platforms
-   - **News/Media**: Press coverage, interviews, articles, reviews
-   - **Other**: Any additional relevant sources
-
-3. **DETAILED EXTRACTION**: For each source, provide:
-   - "title": Exact page/source title
-   - "url": Complete URL
-   - "description": Detailed summary (2-3 sentences) including key facts, metrics, or claims
-   - "domain": Root domain for categorization
-   - "source_type": Category from above list
-   - "quality_indicators": Follower counts, engagement metrics, authority signals
-
-4. **BACKLINK ANALYSIS**: Specifically research and identify:
-   - **Direct Mentions**: Websites that mention or link to the entity
-   - **Citation Sources**: News articles, blog posts, directory listings that reference them
-   - **Professional References**: Company websites, partner sites, client testimonials
-   - **Educational Citations**: Course platforms, tutorial sites, learning resources
-   - **Community Mentions**: Forum discussions, Reddit posts, social media shares
-   - **Press Coverage**: Media outlets, interviews, feature articles
-   - **Directory Listings**: Professional directories, industry listings, awards
-   - **Backlink Quality**: Assess domain authority, relevance, and link context
-   - **Backlink Volume**: Estimate total number of backlinks and mentions
-   - **Link Types**: Do-follow vs no-follow, contextual vs directory, editorial vs user-generated
-
-5. **COMPREHENSIVE NARRATIVE**: Provide a detailed **answer_text** that includes:
-   - Entity overview and primary activities
-   - Professional background and achievements
-   - Key metrics and statistics (follower counts, years of experience, etc.)
-   - Notable projects, products, or services
-   - Community impact and reach
-   - Geographic presence and locations
-   - Educational background and credentials
-   - Current affiliations and partnerships
-   - Unique value propositions and differentiators
-   - **Backlink Profile Summary**: Total backlinks, high-authority domains, link diversity
-
-6. **COMPETITIVE LANDSCAPE**: Search for Competitors of ${target}, include detailed analysis:
-   - Identify competitors or similar entities mentioned in sources
-   - Compare audience sizes, metrics, and market positioning when available
-   - Include specific competitor names, follower counts, and platform presence
-   - Assess relative market strength based on available data
-   - Note any head-to-head comparisons found in sources
-   - Industry peers and collaborators
-   - Companies they've worked with
-   - Market positioning context
-   - **Competitive Backlink Analysis**: How their backlink profile compares to competitors
-
-7. **EVIDENCE-BASED**: Include specific facts, numbers, and claims with source attribution. Be as comprehensive and factual as possible.
-
-Focus on gathering the most complete picture possible with verifiable information, credible sources, and a thorough backlink profile analysis.
-  `.trim();
+  return (
+    statusConfig[status as keyof typeof statusConfig] || "text-muted-foreground"
+  );
 }
 
+export function getProgressPercentage(status: string): string {
+  const progressMap = {
+    pending: "0%",
+    running: "25%",
+    analyzing: "75%",
+    completed: "100%",
+    failed: "Error",
+  };
 
-export function buildAnalysisPrompt(scrapingData: ScrapingDataItem[]): string {
-  const formattedData = scrapingData.map((item, index) => ({
-    id: index + 1,
-    prompt: item.prompt,
-    answer_text: item.answer_text, 
-    sources: item.sources,
-    timestamp: item.timestamp,
-    url: item.url,
-  }));
+  return progressMap[status as keyof typeof progressMap] || "0%";
+}
 
-  return `
-Please analyze the following scraping data and generate a comprehensive SEO report.
+export function getProgressBarStyle(status: string): string {
+  const styleMap = {
+    pending: "w-0 bg-yellow-500",
+    running: "w-1/4 bg-blue-500",
+    analyzing: "w-3/4 bg-purple-500",
+    completed: "w-full bg-green-500",
+    failed: "w-full bg-red-500",
+  };
 
-SCRAPING DATA:
-${JSON.stringify(formattedData, null, 2)}
+  return styleMap[status as keyof typeof styleMap] || "w-0 bg-gray-500";
+}
 
-Generate a complete SEO report following the system prompt guidelines. Return only the JSON response matching the SeoReport interface structure.
-`.trim();
+export function getReportTitle(status: string): string {
+  switch (status) {
+    case "completed":
+      return "Report Ready!";
+    case "failed":
+      return "Report Failed";
+    default:
+      return "Generating Report";
+  }
+}
+
+export function getStatusMessage(status: string): string {
+  switch (status) {
+    case "pending":
+      return "Your report is queued and will start processing shortly.";
+    case "running":
+      return "We're scraping data from search engines. This may take a few minutes.";
+    case "analyzing":
+      return "We're analyzing your data and generating AI insights. This may take a few more minutes.";
+    case "completed":
+      return "Your report is ready! You can now view and download your SEO insights.";
+    case "failed":
+      return "There was an error processing your report. Please try again.";
+    default:
+      return "Unknown status";
+  }
+}
+
+export function getStatusConfig(status: string) {
+  const statusConfig = {
+    pending: {
+      icon: Clock,
+      label: "Pending",
+      variant: "secondary" as const,
+      className:
+        "bg-yellow-50 text-yellow-700 border-yellow-200 hover:bg-yellow-100 dark:bg-yellow-900/20 dark:text-yellow-300 dark:border-yellow-800 dark:hover:bg-yellow-900/30",
+    },
+    running: {
+      icon: HardDriveDownload,
+      label: "Scraping",
+      variant: "secondary" as const,
+      className:
+        "bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 dark:bg-blue-900/20 dark:text-blue-300 dark:border-blue-800 dark:hover:bg-blue-900/30",
+    },
+    analyzing: {
+      icon: BarChart3,
+      label: "Analyzing",
+      variant: "secondary" as const,
+      className:
+        "bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100 dark:bg-purple-900/20 dark:text-purple-300 dark:border-purple-800 dark:hover:bg-purple-900/30",
+    },
+    completed: {
+      icon: CheckCircle,
+      label: "Completed",
+      variant: "default" as const,
+      className:
+        "bg-green-50 text-green-700 border-green-200 hover:bg-green-100 dark:bg-green-900/20 dark:text-green-300 dark:border-green-800 dark:hover:bg-green-900/30",
+    },
+    failed: {
+      icon: XCircle,
+      label: "Failed",
+      variant: "destructive" as const,
+      className:
+        "bg-red-50 text-red-700 border-red-200 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-300 dark:border-red-800 dark:hover:bg-red-900/30",
+    },
+  };
+
+  return (
+    statusConfig[status as keyof typeof statusConfig] || statusConfig.pending
+  );
+}
+
+export function formatDate(timestamp: number): string {
+  return new Date(timestamp).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+export function formatDateTime(timestamp: number): string {
+  return new Date(timestamp).toLocaleString();
 }
