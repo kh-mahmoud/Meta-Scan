@@ -1,12 +1,12 @@
 import { countries } from '@/constants';
 import { Id } from '@/convex/_generated/dataModel';
-
+import { DataModel } from '@/convex/_generated/dataModel';
 
 export type Country = typeof countries[number]["code"];
 
 export type scrapeProps = {
   prompt: string;
-  country: Country;
+  country?: Country ;
   reportId?:Id<'reports'>;
 };
 
@@ -32,3 +32,5 @@ export type ScrapingDataItem = {
   timestamp: string;
   url: string;
 }
+
+export type Report = DataModel["reports"]["document"]; 
