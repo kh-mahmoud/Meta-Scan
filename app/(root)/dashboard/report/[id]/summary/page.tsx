@@ -1,12 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { use } from "react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { AlertTriangle, Loader2 } from "lucide-react";
-
-
-import { Protect, useUser } from "@clerk/nextjs";
+import { Protect } from "@clerk/nextjs";
 import { SeoReport } from "@/lib/schema";
 import {
   AdditionalAnalysisGrid,
@@ -19,6 +17,7 @@ import {
   SourceDistributionChart,
   SummaryHeader,
 } from "@/components/Summary/ui";
+import AIChat from "@/components/Aichat";
 // import AIChat from "@/components/AIChat";
 
 interface ReportSummaryProps {
@@ -26,13 +25,11 @@ interface ReportSummaryProps {
 }
 
 export default function ReportSummary({ params }: ReportSummaryProps) {
-  const { id } = React.use(params);
-  const { user } = useUser();
+  const { id } = use(params);
 
   const report = useQuery(api.scraping.GetReportBySnapshotId, {
-    snapshotId: id,
-    userId: user?.id || "skip",
-  });
+    snapshotId: id
+    });
 
   const seoReport = report?.seoReport as SeoReport | undefined;
 
@@ -77,15 +74,15 @@ export default function ReportSummary({ params }: ReportSummaryProps) {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-background via-background to-muted/20">
-      <SummaryHeader seoReport={seoReport} />
+      <SummaryHeader seoReport={seoReport} id={id} />
 
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 space-y-8 lg:space-y-12">
         <OverallScoreCard seoReport={seoReport} />
         <KeyMetricsGrid seoReport={seoReport} />
 
-        {/* <Protect plan="pro" fallback={<AIChatUpsellCard />}>
+        <Protect plan="pro" >
           <AIChat seoReportId={id} />
-        </Protect> */}
+        </Protect>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
           <SourceDistributionChart seoReport={seoReport} />

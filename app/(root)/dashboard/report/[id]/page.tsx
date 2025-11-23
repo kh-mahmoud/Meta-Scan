@@ -31,7 +31,6 @@ import {
   getStatusMessage,
   formatDateTime,
 } from "@/lib/utils";
-import { useUser } from "@clerk/nextjs";
 import { Scrape } from "@/lib/actions/scrape.action";
 import StatusBadge from "@/components/Status-Badge";
 
@@ -42,15 +41,13 @@ export default function ReportPage({
   params: Promise<{ id: string }>;
 }) {
   const [id, setId] = useState<string | null>(null);
-  const { user } = useUser();
   const [isPending, startTransition] = useTransition();
   const [retryError, setRetryError] = useState<string | null>(null);
   const router = useRouter();
 
   //get the report
   const report = useQuery(api.scraping.GetReportBySnapshotId, {
-    snapshotId: id || "skip",
-    userId: user?.id || "skip",
+    snapshotId: id || "skip"
   });
 
  //get thereport snapshot

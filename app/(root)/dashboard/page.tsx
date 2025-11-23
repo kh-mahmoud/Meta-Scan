@@ -17,7 +17,6 @@ import { BarChart3, FileText, Loader2, Plus, TrendingUp } from "lucide-react";
 
 const Dashboard = () => {
   const reports = useQuery(api.scraping.getUserReports);
-  console.log(reports);
 
   if (!reports) {
     return (
