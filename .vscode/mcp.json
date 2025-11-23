@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "Sentry": {
+      "url": "https://mcp.sentry.dev/mcp/messa-ih/meta-scan",
+      "type": "http"
+    }
+  }
+}
