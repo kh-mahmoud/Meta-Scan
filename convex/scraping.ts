@@ -199,7 +199,6 @@ export const GetReportById = query({
 export const GetReportBySnapshotId = query({
   args: {
     snapshotId: v.string(),
-    userId: v.string(),
   },
   handler: async (ctx, args) => {
     try {
