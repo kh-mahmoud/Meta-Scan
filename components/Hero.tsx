@@ -7,9 +7,9 @@ const Hero = () => {
         <div className="text-center">
           <h1 className="hero-section-title">
             <span className="hero-section-title-gradient">
-              Generate Beautiful
+              Generate Professional
             </span>
-            <span className="hero-section-subtitle">SEO Reports</span>
+            <span className="hero-section-subtitle">Data-Driven SEO Reports</span>
             <span className="hero-section-title-gradient">in Seconds</span>
           </h1>
 
