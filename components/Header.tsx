@@ -21,11 +21,11 @@ function Header() {
 
   return (
     <header
-      className={`sticky top-0 w-full border-b bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60 ${
+      className={`header-base ${
         isPricingPage ? "z-0 bg-transparent" : "z-50"
       }`}
     >
-      <div className="mx-auto flex h-14 max-w-7xl items-center gap-2 px-4">
+      <div className="header-container">
         <div className="flex flex-1 items-center gap-3">
           <Link href="/" className="flex items-center gap-2">
             <Logo />

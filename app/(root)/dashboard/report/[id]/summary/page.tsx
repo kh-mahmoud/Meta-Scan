@@ -35,10 +35,10 @@ export default function ReportSummary({ params }: ReportSummaryProps) {
 
   if (report === undefined) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="loading-container">
         <div className="text-center">
           <Loader2 className="w-8 h-8 animate-spin text-primary mx-auto mb-4" />
-          <p className="text-muted-foreground">Loading SEO report...</p>
+          <p className="loading-text">Loading SEO report...</p>
         </div>
       </div>
     );
@@ -46,7 +46,7 @@ export default function ReportSummary({ params }: ReportSummaryProps) {
 
   if (report === null) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="loading-container">
         <div className="text-center">
           <AlertTriangle className="h-12 w-12 text-destructive mx-auto mb-4" />
           <h2 className="text-2xl font-bold mb-2">Report Not Found</h2>
@@ -60,7 +60,7 @@ export default function ReportSummary({ params }: ReportSummaryProps) {
 
   if (!seoReport) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="loading-container">
         <div className="text-center">
           <AlertTriangle className="h-12 w-12 text-destructive mx-auto mb-4" />
           <h2 className="text-2xl font-bold mb-2">Report Not Found</h2>
@@ -73,10 +73,10 @@ export default function ReportSummary({ params }: ReportSummaryProps) {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-background via-background to-muted/20">
+    <div className="bg-gradient-dashboard">
       <SummaryHeader seoReport={seoReport} id={id} />
 
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 space-y-8 lg:space-y-12">
+      <div className="container-main space-y-8 lg:space-y-12">
         <OverallScoreCard seoReport={seoReport} />
         <KeyMetricsGrid seoReport={seoReport} />
 

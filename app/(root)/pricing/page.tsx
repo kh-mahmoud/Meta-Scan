@@ -2,7 +2,7 @@ import { PricingTable } from '@clerk/nextjs';
 
 const page = () => {
   return (
-    <div className='flex h-[calc(100vh-64px)] justify-center items-center mx-10'>
+    <div className='container-pricing'>
        <PricingTable  newSubscriptionRedirectUrl='/dashboard'/>
     </div>
   );

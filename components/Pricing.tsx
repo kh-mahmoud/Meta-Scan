@@ -13,13 +13,13 @@ import { Badge } from "./ui/badge";
 
 const Pricing = () => {
   return (
-    <section className="py-20 sm:py-32 bg-linear-to-r from-emerald-50/50 via-blue-50/50 to-purple-50/50 dark:from-emerald-950/50 dark:via-blue-950/50 dark:to-purple-950/50">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
+    <section className="bg-gradient-pricing">
+      <div className="container-section">
+        <div className="section-title-center">
+          <h2 className="section-title">
             Simple, Transparent Pricing
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="section-description">
             Choose the plan that fits your SEO needs. Upgrade or downgrade
             anytime.
           </p>
@@ -27,7 +27,7 @@ const Pricing = () => {
 
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {/* Starter Pricing */}
-          <Card className="hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 border-blue-200 dark:border-blue-800 bg-linear-to-br from-blue-50/80 to-cyan-50/80 dark:from-blue-950/80 dark:to-cyan-950/80">
+          <Card className="pricing-card-starter">
             <CardHeader className="text-center pb-8">
               <CardTitle className="text-xl mb-2">Starter</CardTitle>
               <div className="flex items-baseline justify-center gap-1">
@@ -57,7 +57,7 @@ const Pricing = () => {
               </div>
               <Link href="/pricing">
                 <Button
-                  className="w-full mt-6 bg-linear-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 border-0"
+                  className="w-full mt-6 button-gradient-blue"
                   size="lg"
                 >
                   Subscribe to Starter
@@ -67,8 +67,8 @@ const Pricing = () => {
           </Card>
 
           {/* Pro Pricing */}
-          <Card className="border-2 border-purple-300 dark:border-purple-700 hover:border-purple-500 hover:shadow-xl hover:shadow-purple-500/20 transition-all duration-300 relative bg-linear-to-br from-purple-50/80 via-pink-50/80 to-rose-50/80 dark:from-purple-950/80 dark:via-pink-950/80 dark:to-rose-950/80">
-            <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-linear-to-r from-purple-600 to-pink-600 text-white border-0">
+          <Card className="pricing-card-pro">
+            <Badge className="pricing-badge-popular">
               Most Popular
             </Badge>
             <CardHeader className="text-center pb-8">
@@ -102,7 +102,7 @@ const Pricing = () => {
               </div>
               <Link href="/pricing">
                 <Button
-                  className="w-full mt-6 bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 border-0"
+                  className="w-full mt-6 button-gradient-purple"
                   size="lg"
                 >
                   Subscribe to Pro

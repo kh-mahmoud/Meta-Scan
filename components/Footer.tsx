@@ -10,7 +10,7 @@ import { links } from '@/constants'
 export default  function Footer() {
     return (
         <footer className="py-5 ">
-            <div className="mx-auto max-w-5xl px-6">
+            <div className="container-footer">
                 <Link
                     href="/"
                     aria-label="go home"
@@ -23,7 +23,7 @@ export default  function Footer() {
                         <Link
                             key={index}
                             href={link.href}
-                            className="text-muted-foreground hover:text-primary block duration-150">
+                            className="link-footer">
                             <span>{link.title}</span>
                         </Link>
                     ))}
@@ -34,7 +34,7 @@ export default  function Footer() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="X/Twitter"
-                        className="text-muted-foreground hover:text-primary block">
+                        className="link-social">
                         <svg
                             className="size-6"
                             xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +51,7 @@ export default  function Footer() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="LinkedIn"
-                        className="text-muted-foreground hover:text-primary block">
+                        className="link-social">
                         <svg
                             className="size-6"
                             xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +68,7 @@ export default  function Footer() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Facebook"
-                        className="text-muted-foreground hover:text-primary block">
+                        className="link-social">
                         <svg
                             className="size-6"
                             xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +85,7 @@ export default  function Footer() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Threads"
-                        className="text-muted-foreground hover:text-primary block">
+                        className="link-social">
                         <svg
                             className="size-6"
                             xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +107,7 @@ export default  function Footer() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Instagram"
-                        className="text-muted-foreground hover:text-primary block">
+                        className="link-social">
                         <svg
                             className="size-6"
                             xmlns="http://www.w3.org/2000/svg"
@@ -124,7 +124,7 @@ export default  function Footer() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="TikTok"
-                        className="text-muted-foreground hover:text-primary block">
+                        className="link-social">
                         <svg
                             className="size-6"
                             xmlns="http://www.w3.org/2000/svg"

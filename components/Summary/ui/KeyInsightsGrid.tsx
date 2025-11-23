@@ -19,14 +19,14 @@ export function KeyInsightsGrid({ seoReport }: KeyInsightsGridProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {/* Strengths */}
-      <Card className="border bg-linear-to-br from-card to-card/95">
+      <Card className="border bg-gradient-card">
         <CardHeader className="pb-6">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-full bg-linear-to-br from-green-100 to-emerald-100 dark:from-green-900/50 dark:to-emerald-900/50">
-              <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400" />
+            <div className="icon-wrapper-base icon-wrapper-gradient-green">
+              <CheckCircle className="h-6 w-6 text-green-metric" />
             </div>
             <div>
-              <CardTitle className="text-2xl text-green-600 dark:text-green-400">
+              <CardTitle className="text-2xl text-green-metric">
                 Key Strengths
               </CardTitle>
               <CardDescription className="text-base">
@@ -41,14 +41,14 @@ export function KeyInsightsGrid({ seoReport }: KeyInsightsGridProps) {
               (strength, index) => (
                 <div
                   key={index}
-                  className="p-4 rounded-xl border bg-linear-to-br from-green-50 to-emerald-50 dark:from-green-950/30 dark:to-emerald-950/30 border-green-200 dark:border-green-800 hover:shadow-lg transition-all duration-300 group"
+                  className="insight-card-green group"
                 >
                   <div className="flex items-start gap-3">
-                    <div className="p-2 rounded-full bg-white/80 dark:bg-black/20 text-green-600 dark:text-green-400 shrink-0">
+                    <div className="icon-wrapper-backdrop text-green-metric">
                       <CheckCircle className="h-4 w-4" />
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm leading-relaxed font-medium text-green-900 dark:text-green-100">
+                      <p className="text-insight-green">
                         {strength}
                       </p>
                     </div>
@@ -70,14 +70,14 @@ export function KeyInsightsGrid({ seoReport }: KeyInsightsGridProps) {
       </Card>
 
       {/* Critical Issues */}
-      <Card className="border bg-linear-to-br from-card to-card/95">
+      <Card className="border bg-gradient-card">
         <CardHeader className="pb-6">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-full bg-linear-to-br from-red-100 to-pink-100 dark:from-red-900/50 dark:to-pink-900/50">
-              <AlertTriangle className="h-6 w-6 text-red-600 dark:text-red-400" />
+            <div className="icon-wrapper-base icon-wrapper-gradient-red">
+              <AlertTriangle className="h-6 w-6 text-red-metric" />
             </div>
             <div>
-              <CardTitle className="text-2xl text-red-600 dark:text-red-400">
+              <CardTitle className="text-2xl text-red-metric">
                 Critical Issues
               </CardTitle>
               <CardDescription className="text-base">
@@ -91,14 +91,14 @@ export function KeyInsightsGrid({ seoReport }: KeyInsightsGridProps) {
             {(seoReport?.summary?.critical_issues || []).map((issue, index) => (
               <div
                 key={index}
-                className="p-4 rounded-xl border bg-linear-to-br from-red-50 to-pink-50 dark:from-red-950/30 dark:to-pink-950/30 border-red-200 dark:border-red-800 hover:shadow-lg transition-all duration-300 group"
+                className="insight-card-red group"
               >
                 <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-full bg-white/80 dark:bg-black/20 text-red-600 dark:text-red-400 shrink-0">
+                  <div className="icon-wrapper-backdrop text-red-metric">
                     <AlertTriangle className="h-4 w-4" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm leading-relaxed font-medium text-red-900 dark:text-red-100">
+                    <p className="text-insight-red">
                       {issue}
                     </p>
                   </div>
@@ -119,14 +119,14 @@ export function KeyInsightsGrid({ seoReport }: KeyInsightsGridProps) {
       </Card>
 
       {/* Quick Wins */}
-      <Card className="border bg-linear-to-br from-card to-card/95">
+      <Card className="border bg-gradient-card">
         <CardHeader className="pb-6">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-full bg-linear-to-br from-blue-100 to-cyan-100 dark:from-blue-900/50 dark:to-cyan-900/50">
-              <TrendingUp className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+            <div className="icon-wrapper-base icon-wrapper-gradient-blue">
+              <TrendingUp className="h-6 w-6 text-blue-metric" />
             </div>
             <div>
-              <CardTitle className="text-2xl text-blue-600 dark:text-blue-400">
+              <CardTitle className="text-2xl text-blue-metric">
                 Quick Wins
               </CardTitle>
               <CardDescription className="text-base">
@@ -140,14 +140,14 @@ export function KeyInsightsGrid({ seoReport }: KeyInsightsGridProps) {
             {(seoReport?.summary?.quick_wins || []).map((win, index) => (
               <div
                 key={index}
-                className="p-4 rounded-xl border bg-linear-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 border-blue-200 dark:border-blue-800 hover:shadow-lg transition-all duration-300 group"
+                className="insight-card-blue group"
               >
                 <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-full bg-white/80 dark:bg-black/20 text-blue-600 dark:text-blue-400 shrink-0">
+                  <div className="icon-wrapper-backdrop text-blue-metric">
                     <TrendingUp className="h-4 w-4" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm leading-relaxed font-medium text-blue-900 dark:text-blue-100">
+                    <p className="text-insight-blue">
                       {win}
                     </p>
                   </div>

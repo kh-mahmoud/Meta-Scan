@@ -20,8 +20,8 @@ const Dashboard = () => {
 
   if (!reports) {
     return (
-      <div className="flex flex-col items-center justify-center p-12 text-center">
-        <div className="p-3 bg-muted/50 rounded-full mb-4">
+      <div className="container-centered">
+        <div className="loading-icon-wrapper">
           <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
         </div>
         <h3 className="text-lg font-semibold mb-2">Loading Reports</h3>
@@ -34,16 +34,16 @@ const Dashboard = () => {
 
   if (reports.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center p-12 text-center">
-        <div className="p-4 bg-muted/50 rounded-full mb-6">
+      <div className="empty-state-container">
+        <div className="empty-state-icon-wrapper">
           <FileText className="w-8 h-8 text-muted-foreground" />
         </div>
-        <h3 className="text-xl font-semibold mb-2">No Reports Yet</h3>
-        <p className="text-muted-foreground mb-6 max-w-md">
+        <h3 className="empty-state-title">No Reports Yet</h3>
+        <p className="empty-state-description">
           Get started by creating your first SEO analysis report. Enter a
           business name, product, or website above to begin.
         </p>
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="empty-state-hint">
           <Plus className="w-4 h-4" />
           <span>Create your first report to see it here</span>
         </div>
@@ -58,7 +58,7 @@ const Dashboard = () => {
       </section>
 
       <section>
-        <Card className="border-0  mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <Card className="border-0 container-main">
           <CardHeader className="p-0">
             <div className="flex items-center gap-2">
               <BarChart3 className="w-5 h-5 text-primary" />
@@ -72,9 +72,9 @@ const Dashboard = () => {
             <Authenticated>
               <ReportsTable<Report, unknown> columns={ReportColumns} data={reports} />
               {/* Summary  */}
-              <div className="mt-6 flex items-center justify-between text-sm text-muted-foreground">
+              <div className="mt-6 summary-stats-container">
                 <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2">
+                  <div className="summary-stats-item">
                     <TrendingUp className="w-4 h-4" />
                     <span>
                       {reports.length} total report
@@ -83,7 +83,7 @@ const Dashboard = () => {
                   </div>
                   {reports.filter((job) => job.status === "completed").length >
                     0 && (
-                    <div className="flex items-center gap-2">
+                    <div className="summary-stats-item">
                       <div className="w-2 h-2 bg-green-500 rounded-full" />
                       <span>
                         {

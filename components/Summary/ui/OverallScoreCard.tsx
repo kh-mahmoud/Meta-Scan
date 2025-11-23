@@ -36,8 +36,8 @@ export function OverallScoreCard({ seoReport }: OverallScoreCardProps) {
 
   return (
     <Card className="border-none shadow-2xl bg-linear-to-br from-primary/5 via-primary/8 to-primary/12 relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-16 translate-x-16" />
-      <div className="absolute bottom-0 left-0 w-24 h-24 bg-primary/3 rounded-full translate-y-12 -translate-x-12" />
+      <div className="card-decoration-circle-large bg-primary/5" />
+      <div className="card-decoration-circle-small bg-primary/3" />
       <CardContent className="p-8 lg:p-12 relative">
         <div className="grid lg:grid-cols-2 gap-8 items-center">
           <div className="space-y-4">

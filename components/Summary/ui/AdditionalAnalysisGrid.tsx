@@ -34,10 +34,10 @@ export function AdditionalAnalysisGrid({
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
       {/* Backlink Sources Analysis */}
-      <Card className="border bg-linear-to-br from-card to-card/95">
+      <Card className="border bg-gradient-card">
         <CardHeader className="pb-6">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-full bg-linear-to-br from-indigo-100 to-purple-100 dark:from-indigo-900/50 dark:to-purple-900/50">
+            <div className="icon-wrapper-base icon-wrapper-gradient-indigo">
               <Globe className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
             </div>
             <div>
@@ -161,10 +161,10 @@ export function AdditionalAnalysisGrid({
       </Card>
 
       {/* Content Themes & Domain Analysis */}
-      <Card className="border bg-linear-to-br from-card to-card/95">
+      <Card className="border bg-gradient-card">
         <CardHeader className="pb-6">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-full bg-linear-to-br from-teal-100 to-cyan-100 dark:from-teal-900/50 dark:to-cyan-900/50">
+            <div className="icon-wrapper-base icon-wrapper-gradient-teal">
               <Search className="h-6 w-6 text-teal-600 dark:text-teal-400" />
             </div>
             <div>
@@ -178,10 +178,10 @@ export function AdditionalAnalysisGrid({
         <CardContent>
           <div className="space-y-6">
             {/* Content Themes */}
-            <div className="p-4 rounded-xl border bg-linear-to-br from-teal-50 to-cyan-50 dark:from-teal-950/30 dark:to-cyan-950/30 border-teal-200 dark:border-teal-800">
+            <div className="insight-card-teal">
               <div className="flex items-center gap-2 mb-4">
                 <Target className="h-5 w-5 text-teal-600 dark:text-teal-400" />
-                <h4 className="font-bold text-lg text-teal-900 dark:text-teal-100">
+                <h4 className="text-insight-teal">
                   Content Themes
                 </h4>
               </div>
@@ -191,12 +191,12 @@ export function AdditionalAnalysisGrid({
                     key={theme.theme}
                     className="flex items-center justify-between p-3 bg-white/50 dark:bg-black/20 rounded-lg"
                   >
-                    <span className="font-medium truncate flex-1 mr-3 text-teal-900 dark:text-teal-100">
+                    <span className="text-insight-teal">
                       {theme.theme}
                     </span>
                     <Badge
                       variant="secondary"
-                      className="bg-teal-100 text-teal-700 dark:bg-teal-900/50 dark:text-teal-300"
+                      className="badge-teal"
                     >
                       {theme.frequency}
                     </Badge>
@@ -211,11 +211,11 @@ export function AdditionalAnalysisGrid({
             </div>
 
             {/* Overall Sentiment */}
-            <div className="p-4 rounded-xl border bg-linear-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/30 dark:to-purple-950/30 border-indigo-200 dark:border-indigo-800">
+            <div className="insight-card-indigo">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <TrendingUp className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
-                  <h4 className="font-bold text-lg text-indigo-900 dark:text-indigo-100">
+                  <h4 className="text-insight-indigo">
                     Overall Sentiment
                   </h4>
                 </div>
@@ -239,10 +239,10 @@ export function AdditionalAnalysisGrid({
             </div>
 
             {/* Top Domains */}
-            <div className="p-4 rounded-xl border bg-linear-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border-amber-200 dark:border-amber-800">
+            <div className="insight-card-amber">
               <div className="flex items-center gap-2 mb-4">
                 <Globe className="h-5 w-5 text-amber-600 dark:text-amber-400" />
-                <h4 className="font-bold text-lg text-amber-900 dark:text-amber-100">
+                <h4 className="text-insight-amber">
                   Top Domains
                 </h4>
               </div>

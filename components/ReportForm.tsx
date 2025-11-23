@@ -42,8 +42,8 @@ const ReportForm = () => {
   };
 
   return (
-    <div className="bg-linear-to-br from-background via-background to-muted/20">
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="bg-gradient-dashboard">
+      <div className="container-main">
         <div className="space-y-8">
           <Card className="report-form ">
             {/* decorations */}
@@ -120,16 +120,16 @@ const ReportForm = () => {
 
                 {/* Feature highlights */}
                 <div className="flex flex-wrap justify-center gap-4 pt-4 border-t border-blue-200/50 dark:border-blue-800/50">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                  <div className="feature-highlight-item">
+                    <div className="feature-highlight-dot bg-green-500"></div>
                     <span>AI-Powered Analysis</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+                  <div className="feature-highlight-item">
+                    <div className="feature-highlight-dot bg-blue-500"></div>
                     <span>Real-time Data</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <div className="w-2 h-2 rounded-full bg-purple-500"></div>
+                  <div className="feature-highlight-item">
+                    <div className="feature-highlight-dot bg-purple-500"></div>
                     <span>Comprehensive Insights</span>
                   </div>
                 </div>

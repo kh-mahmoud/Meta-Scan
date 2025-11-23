@@ -87,25 +87,25 @@ export default function ReportPage({
 
   if (!id) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="loading-container">
         <Loader2 className="w-6 h-6 animate-spin mr-2" />
-        <span className="text-muted-foreground">Loading...</span>
+        <span className="loading-text">Loading...</span>
       </div>
     );
   }
 
   if (report === undefined) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="loading-container">
         <Loader2 className="w-6 h-6 animate-spin mr-2" />
-        <span className="text-muted-foreground">Loading report status...</span>
+        <span className="loading-text">Loading report status...</span>
       </div>
     );
   }
 
   if (report === null) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="loading-container">
         <AlertCircle className="w-6 h-6 text-destructive mr-2" />
         <span className="text-destructive">Report not found</span>
       </div>
@@ -113,15 +113,15 @@ export default function ReportPage({
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-background via-background to-muted/20">
+    <div className="bg-gradient-dashboard">
       <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="space-y-6">
           {/* Header */}
           <div className="text-center">
-            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
+            <h1 className="section-title">
               Report Status
             </h1>
-            <p className="text-lg text-muted-foreground">
+            <p className="section-description">
               Track the progress of your SEO report generation
             </p>
           </div>
@@ -155,17 +155,17 @@ export default function ReportPage({
                     {getProgressPercentage(report.status)}
                   </span>
                 </div>
-                <div className="w-full bg-muted rounded-full h-2">
+                <div className="progress-bar-container">
                   <div
-                    className={`h-2 rounded-full transition-all duration-500 ${getProgressBarStyle(report.status)}`}
+                    className={`progress-bar-fill ${getProgressBarStyle(report.status)}`}
                   />
                 </div>
               </div>
 
               {/* report Details */}
               <div className="space-y-4 pt-4 border-t">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="flex items-center gap-3">
+                <div className="report-details-grid">
+                  <div className="report-detail-item">
                     <FileText className="w-4 h-4 text-muted-foreground" />
                     <div>
                       <p className="text-sm font-medium">Original Query</p>
@@ -175,7 +175,7 @@ export default function ReportPage({
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3">
+                  <div className="report-detail-item">
                     <Calendar className="w-4 h-4 text-muted-foreground" />
                     <div>
                       <p className="text-sm font-medium">Created</p>
@@ -211,14 +211,14 @@ export default function ReportPage({
                 )}
 
                 {report.error && (
-                  <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                  <div className="alert-error">
                     <div className="flex items-start gap-2">
                       <XCircle className="w-4 h-4 text-red-600 mt-0.5 shrink-0" />
                       <div>
-                        <p className="text-sm font-medium text-red-800 dark:text-red-200">
+                        <p className="text-error-title">
                           Error Details
                         </p>
-                        <p className="text-sm text-red-700 dark:text-red-300 mt-1">
+                        <p className="text-error-content mt-1">
                           {report.error}
                         </p>
                       </div>
@@ -238,8 +238,8 @@ export default function ReportPage({
                         Results Available
                       </p>
                     </div>
-                    <div className="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
-                      <p className="text-sm text-green-700 dark:text-green-300">
+                    <div className="alert-success">
+                      <p className="text-success-content">
                         Your SEO report is ready for analysis.
                       </p>
                     </div>
@@ -249,13 +249,13 @@ export default function ReportPage({
           </Card>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="action-buttons-container">
             {report.status === "completed" && (
               <Link href={`/dashboard/report/${id}/summary`}>
                 <Button
                   variant="default"
                   size="lg"
-                  className="cursor-pointer bg-green-600 hover:bg-green-700 text-white"
+                  className="cursor-pointer button-gradient-green"
                 >
                   View Full Report
                 </Button>

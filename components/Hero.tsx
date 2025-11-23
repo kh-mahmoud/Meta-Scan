@@ -3,7 +3,7 @@ import DotGrid from "./DotGrid";
 const Hero = () => {
   return (
     <section className="relative overflow-hidden">
-      <div className="relative z-10 mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-32  lg:px-8">
+      <div className="section-padding">
         <div className="text-center">
           <h1 className="hero-section-title">
             <span className="hero-section-title-gradient">
@@ -64,7 +64,7 @@ const Hero = () => {
           returnDuration={1.5}
         />
       </div>
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-linear-to-b from-transparent to-[#F8F6FF] pointer-events-none" />
+      <div className="hero-gradient-overlay" />
     </section>
   );
 };

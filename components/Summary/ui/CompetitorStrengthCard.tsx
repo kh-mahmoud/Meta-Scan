@@ -27,11 +27,11 @@ export function CompetitorStrengthCard({
     }));
 
   return (
-    <Card className="border bg-linear-to-br from-card to-card/95">
+    <Card className="border bg-gradient-card">
       <CardHeader className="pb-6">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-full bg-orange-100 dark:bg-orange-900/50">
-            <Users className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+          <div className="icon-wrapper-base icon-wrapper-orange">
+            <Users className="h-5 w-5 text-orange-metric" />
           </div>
           <div>
             <CardTitle className="text-xl">Competitor Strength</CardTitle>
