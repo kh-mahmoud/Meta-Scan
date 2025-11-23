@@ -5,6 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Award, CheckCircle } from "lucide-react";
 import { SeoReport } from "@/lib/schema";
+import CountUp from 'react-countup';
+
 
 interface OverallScoreCardProps {
   seoReport: SeoReport;
@@ -67,7 +69,8 @@ export function OverallScoreCard({ seoReport }: OverallScoreCardProps) {
               <div
                 className={`text-8xl lg:text-9xl font-bold ${getScoreGradient(score)} bg-clip-text text-transparent`}
               >
-                {score}
+                <CountUp start={0} end={score} duration={2.75}/>
+
               </div>
               <div className="absolute -bottom-2 right-0 text-2xl font-bold text-muted-foreground">
                 /100
