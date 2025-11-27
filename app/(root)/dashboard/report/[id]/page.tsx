@@ -169,7 +169,7 @@ export default function ReportPage({
                     <FileText className="w-4 h-4 text-muted-foreground" />
                     <div>
                       <p className="text-sm font-medium">Original Query</p>
-                      <p className="text-sm text-muted-foreground truncate">
+                       <p className="text-sm text-muted-foreground truncate w-40">
                         {report.scrapePrompt}
                       </p>
                     </div>
