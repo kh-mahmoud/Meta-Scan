@@ -12,27 +12,28 @@ It's about understanding your presence in **the digital landscape**, about seein
 
 ## 🛠 Tech Stack  
 
-<p>⚡ Next.js 16 — Production-grade React framework for fast, scalable web app</p>
-<p>⚛️ React 19 — Latest React features with concurrent rendering</p>
-<p>🧠 TypeScript — Type-safe development for reliability and maintainability</p>
-<p>🎨 Tailwind CSS v4 — Utility-first styling with modern design primitives</p>
-<p>📊 Recharts — Composable, responsive data visualizations</p>
-<p>🤖 Vercel AI SDK — Streaming, AI-first interfaces and model integration</p>
-<p>🔄 Convex — Real-time backend with automatic APIs and reactive data</p>
-<p>🔐 Clerk — Secure, full-featured authentication and user management</p>
-<p>🧠 Google Gemini AI — Advanced AI analysis and reasoning engine</p>
-<p>🌍 Bright Data — Enterprise-grade web data collection and scraping</p>
+- ⚡ **Next.js 16** — Production-grade React framework for fast, scalable web applications  
+- ⚛️ **React 19** — Latest React features with concurrent rendering  
+- 🧠 **TypeScript** — Type-safe development for reliability and maintainability  
+- 🎨 **Tailwind CSS v4** — Utility-first styling with modern design primitives  
+- 📊 **Recharts** — Composable, responsive data visualizations  
+- 🤖 **Vercel AI SDK** — Streaming, AI-first interfaces and model integration  
+- 🔄 **Convex** — Real-time backend with automatic APIs and reactive data  
+- 🔐 **Clerk** — Secure, full-featured authentication and user management  
+- 🧠 **Google Gemini AI** — Advanced AI analysis and reasoning engine  
+- 🌍 **Bright Data** — Enterprise-grade web data collection and scraping  
+- 🛡 **Sentry** — Application monitoring, performance tracking, and error reporting  
 
 ---
 
 ## 📦 Key Features  
 
-<p>⚡ Speed to Insight — Generate comprehensive SEO reports in seconds, not hours</p>
-<p>🤖 AI-Native Architecture — Google Gemini analyzes and explains your data like a human expert</p>
-<p>📊 Full-Stack Analysis — SERP, keywords, competitors, backlinks, social — all in one view</p>
-<p>💬 Interactive Intelligence — Chat with your reports and ask follow-up questions (Pro)</p>
-<p>🎨 Designed for Decision Makers — Beautiful data that drives action</p>
-<p>🔒 Enterprise-Ready — Clerk authentication keeps your data secure</p>
+- ⚡ **Speed to Insight** — Generate comprehensive SEO reports in seconds, not hours  
+- 🤖 **AI-Native Architecture** — Gemini analyzes and explains data like a human expert  
+- 📊 **Full-Stack Analysis** — SERP, keywords, competitors, backlinks, and social signals in one place  
+- 💬 **Interactive Intelligence** — Chat with reports and ask follow-up questions *(Pro)*  
+- 🎨 **Designed for Decision Makers** — Clear visuals that drive confident action  
+- 🔒 **Enterprise-Ready** — Secure data access powered by Clerk authentication  
 
 ---
 
